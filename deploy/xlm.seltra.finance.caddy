@@ -1,0 +1,22 @@
+xlm.seltra.finance {
+	encode zstd gzip
+
+	root * /var/www/xlm.seltra.finance
+	try_files {path} /index.html
+	file_server
+
+	@index path / /index.html
+	header @index Cache-Control "no-cache"
+
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+
+	header {
+		-Server
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://api.coingecko.com https://*.walletconnect.com https://*.walletconnect.org wss://*.walletconnect.com wss://*.walletconnect.org https://*.reown.com https://*.coinbase.com; frame-src https://verify.walletconnect.com https://verify.walletconnect.org; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+	}
+}
